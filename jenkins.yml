@@ -8,11 +8,6 @@
     get_url:
       url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
       dest: /etc/yum.repos.d/jenkins.repo
-  # - name: Configure the Jenkins Repo
-  #   ansible.builtin.yum_repository:
-  #     name: jenkins
-  #     description: Jenkins Repo
-  #     baseurl: https://pkg.jenkins.io/redhat-stable/jenkins.repo
   - name: Import jenkins key from url
     ansible.builtin.rpm_key:
       state: present
@@ -22,11 +17,9 @@
     ansible.builtin.yum:
       name: '*'
       state: latest
-
-  - name: Install java
-    ansible.builtin.yum:
-      name: java-11-openjdk-devel
-      state: present
+  - name: Install the Java-11
+    shell:
+      cmd: "amazon-linux-extras install java-openjdk11 -y"
 
   - name: Install jenkins
     ansible.builtin.yum:
